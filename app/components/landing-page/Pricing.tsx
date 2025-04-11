@@ -5,7 +5,7 @@ import RecommendedPricingCard from "./RecommendedPricingCard";
 
 export default function Pricing() {
   return (
-    <div className="my-[150px] flex flex-col items-center gap-14">
+    <div className="my-[150px] flex flex-col items-center gap-14 border border-border-primary pt-20 pb-20 rounded-2xl">
       {/* Título e descrição */}
       <div className="flex flex-col items-center gap-6">
         <h3 className="text-4xl font-bold text-white">
