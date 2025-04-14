@@ -1,34 +1,41 @@
 "use client";
-import { verifyLink } from "../../actions/verify-link";
+import { createLink } from "@/app/actions/create-link";
+import { verifyLink } from "@/app/actions/verify-link";
 import Button from "@/app/components/ui/Button";
 import TextInput from "@/app/components/ui/Text-Input";
 import { sanitizeLink } from "@/app/lib/utils";
+import { useRouter } from "next/navigation";
 import { ChangeEvent, FormEvent, useState } from "react";
 
 export default function CreateLinkForm() {
-  const [link, setlink] = useState("");
+  const router = useRouter();
+
+  const [link, setLink] = useState("");
   const [error, setError] = useState("");
 
-  async function handleLinkChange(e: ChangeEvent<HTMLInputElement>) {
-    setlink(sanitizeLink(e.target.value));
+  function handleLinkChange(e: ChangeEvent<HTMLInputElement>) {
+    setLink(sanitizeLink(e.target.value));
     setError("");
   }
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    // validações entrada de dados
-    if (link.length === 0) {
-      setError("O link não pode ser vazio");
-      return;
-    }
+    // Quando o usuario nao escreve um link
+    if (link.length === 0) return setError("Escolha um link primeiro :)");
 
+    // Quando o usuario escolhe um link ja existente
     const isLinkTaken = await verifyLink(link);
 
-    if (isLinkTaken) {
-      setError("Esse link já está em uso");
-      return;
-    }
+    if (isLinkTaken) return setError("Desculpe, esse link já está em uso.");
+
+    // Criar o perfil
+    const isLinkCreated = await createLink(link);
+
+    if (!isLinkCreated)
+      return setError("Erro ao criar o perfil. Tente novamente.");
+
+    router.push(`/${link}`);
   }
 
   return (

@@ -5,7 +5,6 @@ import { auth } from "../lib/auth";
 import { db } from "../lib/firebase";
 
 export async function createLink(link: string) {
-  // Verifica se o link é válido
   const session = await auth();
 
   if (!session?.user) return;
