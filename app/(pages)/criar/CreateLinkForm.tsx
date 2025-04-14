@@ -29,8 +29,6 @@ export default function CreateLinkForm() {
       setError("Esse link já está em uso");
       return;
     }
-
-    // Aqui você pode continuar com a lógica de criação do link
   }
 
   return (
