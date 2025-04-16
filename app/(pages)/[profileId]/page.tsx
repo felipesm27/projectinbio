@@ -19,7 +19,7 @@ export default async function ProfilePage({
 
   if (!profileData) return notFound();
 
-  // TODO: get projects
+  // const projects = await getProfileProjects(profileId);
 
   const session = await auth();
 
